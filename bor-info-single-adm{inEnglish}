@@ -1,0 +1,346 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- filename: bor-info-single-adm -->
+
+<html>
+<head>
+<include>meta-tags
+<title>&f-base - User information - Summary</title>
+<include>replace-page-js
+</head>
+
+<body topmargin="0">
+<include>head-replace
+<table width="100%" align="center" border="0" cellpadding="0" cellspacing="0">
+   <tr>
+      <td class="bar" width="20%" align="center" nowrap>&nbsp;</td>
+      <td class="bar" align="center" nowrap>
+	 <a class="blue" href="javascript:replacePage('&server_f?func=display-profile');" title="Osobní profil"> Personal profile</a>
+      </td>
+      <td class="bar" align="center" nowrap>&nbsp;|&nbsp;</td>
+      <td class="bar" align="center" nowrap>
+	 <a class="blue" href="javascript:replacePage('&server_f?func=bor-sdi');" ">News Service SDI - Profiles</a>
+      </td>
+      <td class="bar" align="center" nowrap id="heslo1">&nbsp;|&nbsp;</td>
+      <td class="bar" align="center" nowrap id="heslo2">
+	 <a class="blue" href="javascript:replacePage('&server_f?func=file&file_name=bor-update-password');" >Password</a>
+      </td>
+      <td class="bar" width="20%" align="center" nowrap>&nbsp;</td>
+   </tr>
+</table>
+
+<!--STANDARD VIEW OF BORROWER ACCOUNT (registration)-->
+<div id="borAccount">
+   <div class="title"> Library card - $0700</div>
+   <p>
+   <a name="messages"></a>
+   <div id="messages4U" style="display: none;">There are $0800 Messages for you.</div>
+   <script type="text/javascript">
+      //hide messages header if no messages
+      if (  document.getElementById('messages4U').getElementsByTagName('a').length>0 ) document.getElementById('messages4U').style.display='';
+   </script>
+
+
+<!--registration - mark blocks with class "blocks"-->
+   <!-- a name="blocks"></a>
+   <span class=tr1 id=bold>Blocks</span -->
+<span class="tr1 blocks" id="bold"> $2100 </span>
+<span class="tr1 blocks" id="bold"> $2200 </span>
+<span class="tr1 blocks" id="bold"> $2300 </span>
+<span class="tr1 blocks" id="bold"> $2400 </span>
+<span class="tr1 blocks" id="bold"> $2500 </span>
+<span class="tr1 blocks" id="bold"> $2600 </span>
+<span class="tr1 blocks" id="bold"> $2700 </span>
+<span class="tr1 blocks" id="bold"> $2800 </span>
+<span class="tr1 blocks" id="bold"> $2900 </span>
+<span class="tr1 blocks" id="bold"> $3000 </span>
+<span class="tr1 blocks" id="bold"> $3100 </span>
+<span class="tr1 blocks" id="bold"> $3200 </span>
+
+<!--registration--><p id="onlineRegistrationNotice" style="display: none;">Zaregistrujte se <a href="javascript:void(0)" onclick="switch2registration();">online</a> nebo v <a href="http://www.library.gen/">knihovnì</a>.<br></p>
+
+
+<table class="indent1" border="0" cellspacing="2">
+   <tr>
+      <td></td>
+      $5000
+   </tr>
+   <tr>
+      <td class="td2" align="left">
+         <a href="javascript:replacePage('&server_f?func=bor-loan');">Loans, Renews (prolongs)</a>
+      </td>
+      $1100 
+   </tr>
+   <tr>
+      <td class="td2" align="left">
+         <a href="javascript:replacePage('&server_f?func=bor-hold');">Hold Requests for Loans</a>
+      </td>
+      $1500
+   </tr>
+   <tr>
+      <td class="td2">
+         <a href="javascript:replacePage('&server_f?func=bor-history-loan');">Loan History List</a>
+      </td>
+      $1300
+   </tr>
+   <tr>
+      <td class="td1">Booking Requests</td>
+      $1600
+   </tr>
+   <tr>
+      <td class="td1" align="left">Photo Requests</td>
+      $1700
+   </tr>
+   <tr>
+      <td class="td2" align="left">
+         <a href="javascript:replacePage('&server_f?func=bor-cash');">Closed fees</a><sup><span title="Fees with final (closed) amount">&nbsp;?&nbsp;</span></sup>
+      </td>
+      $1800
+      <script type="text/javascript">
+         var openFees="$5500".replace(/\s/g, "");
+         if ( openFees != "0.00" ) {
+            document.write('<tr><td class="td2" align="left">Open fees<sup><span title="Fees for expired loans are charged for every day after due date">&nbsp;?&nbsp;</span></sup></td>');
+            document.write('<td class="td1">-'+openFees+'</td></tr>');
+            }
+      </script>
+      <noscript>
+         <tr>
+            <td class="td2" align="left">Open fees </td>
+            <td class="td1">$5500</td>
+         </tr>
+      </noscript>
+      <script type="text/javascript">
+         var loan_id="$0400";
+         if ( loan_id != "" && loan_id.substr(0,1)=="C" ) {
+            document.write("<tr><td class='td2'>Library Card</td>");
+            document.write("<td class='td1'>&nbsp;$0400</td></tr>");
+            }
+      </script>
+</table>
+  
+<table  border=0 cellspacing=2>
+   <tr>
+      <td class="td2" align="left">
+         Interlibrary Loans -  <a href="javascript:replacePage('&server_f?func=bor-ill-active');">requests</a>
+      </td>
+      <td class="td1" align="left">
+         &nbsp;&nbsp;<a href="javascript:replacePage('&server_f?func=bor-ill-active');" id="mvs_req">$3300</a>&nbsp;&nbsp;
+      </td>
+   </tr>
+   <tr>
+      <td class="td2" align="left">
+         Interlibrary Loans -  <a href="javascript:replacePage('&server_f?func=bor-ill');">history</a>
+      </td>
+      <td class="td1" align="left">
+         &nbsp;&nbsp;<a href="javascript:replacePage('&server_f?func=bor-ill');">$1900</a>&nbsp;&nbsp;
+      </td>
+   </tr>
+(... ... as to your local settings... ...)
+
+<br>
+<a name="addresses"></a> <!-- $3600 -->
+<br>
+
+<table cellspacing="2" border="0" width="60%">
+   <tr>
+      <td class="td2" width="30%">Address</td>
+      <td class="td2"> $3700</td>
+   </tr>
+   <tr>
+      <td class="td2" width="30%">&nbsp;</td>
+      <td class="td2" align="left"> $3800</td>
+   </tr>
+   <script type="text/javascript">
+      if ( "$3900" != "" && "$3900"!="$3800" ) {
+        document.write("<tr><td class='td2'>&nbsp;</td>");
+        document.write("<td class='td2'>&nbsp;$3900</td></tr>");
+        };
+   </script>
+   <noscript>
+      <tr><td class='td2'>&nbsp;</td><td class='td2'> $3900</td></tr>
+   </noscript>
+   <script type="text/javascript">
+      if ( "$4000" != "" || "$4000"!="$3900" ) {
+        document.write("<tr><td class='td2'>&nbsp;</td>");
+        document.write("<td class='td2'>&nbsp;$4000</td></tr>"); }
+   </script>
+   <noscript>
+      <tr><td class='td2'>&nbsp;</td><td class='td2'> $4000</td></tr>
+   </noscript>
+   <script type="text/javascript">
+      if ( "$4100" != "" || "$4100"!="$4000" ) {
+        document.write("<tr><td class='td2'>&nbsp;</td>");
+        document.write("<td class='td2'>&nbsp;$4100</td></tr>"); }
+   </script>
+   <noscript>
+     <tr><td class='td2'> &nbsp;</td><td class='td2'> $4100</td></tr>
+   </noscript>
+   <script type="text/javascript">
+      if ( "$4500" != "" ) {
+        document.write("<tr><td class='td2'>Post Code</td>");
+        document.write("<td class='td2'>&nbsp;$4500</td></tr>"); }
+   </script>
+   <noscript>
+     <tr><td class='td2'>PSÈ</td><td class='td2'>&nbsp;$4500</td></tr>
+   </noscript>
+   <tr>
+      <td class="td2" width="30%">E-mail</td>
+      <td class="td2"><span id="email">$4200</span></td>
+   </tr>
+<!--
+ <tr><td class="td2" width=30%>Od</td><td class="td2"> $4300</td> </tr>
+ <tr><td class="td2" width="30%">Address valid till</td><td class="td2"> $4400</td></tr>
+-->
+   <tr id="tel1"><td class="td2" align="left">Phone</td><td class="td2" align="left">&nbsp;$4600</td></tr>
+   <tr id="tel2"><td class="td2" align="left">Phone 2</td><td class="td2" align="left">&nbsp;$4700</td></tr>
+   <tr id="tel3"><td class="td2" align="left">Phone 3</td><td class="td2" align="left">&nbsp;$4800</td> </tr>
+   <tr id="tel4"><td class="td2" align="left">Phone 4</td><td class="td2" align="left">&nbsp;$4900</td></tr>
+   <script type="text/javascript">
+      //hide empty telephones
+      if ("$4600"=="") document.getElementById('tel1').style.display='none';
+      if ("$4700"=="") document.getElementById('tel2').style.display='none';
+      if ("$4800"=="") document.getElementById('tel3').style.display='none';
+      if ("$4900"=="") document.getElementById('tel4').style.display='none';
+   </script>
+   
+
+
+<!-- SMS Number $7200 
+Recieve SMS $7300 -->
+
+<a href="javascript:replacePage('&server_f?func=bor-proxy');">Proxy/Sponzor</a>
+<td  class="td1" align="left">&nbsp;$3400 </td>
+
+
+</table>
+<a href="javascript:replacePage('&server_f?func=file&file_name=bor-note-new');"> Note for OTHER user</a>
+<br>
+<table  width="auto" border="0" cellpadding="0" cellspacing="0">
+   <tr>
+      <td class="td2" align="left"> Registration is valid till:&nbsp; </td>
+      <td class="td1" align="left">
+         &nbsp;$0500
+         <script type="text/javascript">
+              if ( parseInt('$0500'.substr(-4))>2025 ) document.write (' or till the end of study/employment');
+         </script>
+      </td>
+   </tr>
+</table>
+</div>
+
+<!--registration-->
+<div id="registration" style="display: none;">
+   <div class="title"> Online registration to library</div>
+   <p>Here you can registrate to the libary and fully enjoy our services.</p>
+   <br>
+   <p>Name: $0700</p>
+   <p>ID: $6000</p>
+   <br>
+   <p> I agree with all laws and rules, library rules, GDPR ... etc. etc.</p>
+   <form  method="POST" id="registrationForm">
+      <p>
+         <input type="hidden" name="consent" value="Y">
+         <input type="hidden" name="borid" value="$6000">
+         <label for="registrationPassword" id="registrationPasswordLabel">For confirmation enter the password again : </label>
+         <input id="registrationPassword" name="password" type="password">
+      </p>
+      <p style="margin-left:20%;">
+         <button name="consent" name="submit" type="submit" id="registrationSubmit" value="Y" class="main_button">Commit</button>
+      </p>
+   </form>
+   <div id="registrationResponse" style="display: none; margin-left: 8em; background-color:#DBEBF9; box-shadow: 0 0 0.7em 0.7em rgba(219,235,249,1); padding: 1.4em; border-radius: 1em; display: none; "></div>
+</div>
+
+
+<!--registration--><!-- ONLINE REGISTRACE, 20210512-->
+<script type="text/javascript">
+   function switch2registration() {
+      document.getElementById('registration').style.display='';
+      document.getElementById('borAccount').style.display='none';
+      }
+
+
+   //listener for processing registration.cgi response
+   //   You may modify the text responses according to your 
+   window.addEventListener( "load", function () {
+      function sendData() {
+         const regResponse=document.getElementById('registrationResponse');
+         const regSubmit=document.getElementById('registrationSubmit');
+         const regPassw=document.getElementById('registrationPassword');
+         const regPasswLabel=document.getElementById('registrationPasswordLabel');
+         const wait=document.createElement('img'); wait.setAttribute('src','&icon_path/f-cekej.gif'); wait.setAttribute('alt','Procesing...');
+         regResponse.appendChild(wait);
+         regResponse.style.display='inline-block';
+         regSubmit.style.display='none';
+         regPassw.style.display='none';
+         regPasswLabel.style.display='none';
+         const XHR = new XMLHttpRequest();
+         const FD = new FormData( form );  // Bind the FormData object and the form element
+         XHR.addEventListener( "load", function(event) { // Define what happens on successful data submission
+            let response=event.target.responseText;
+            if ( response.indexOf('OK')==0 ) {
+               if ( response.indexOf('noCard')==0 ) {
+                  regResponse.innerHTML='<br><strong>Thank you for registering in the library! Now you can fully enjoy our services'; }
+               else {
+                  regResponse.innerHTML='<br><strong>Thank you for registering in the library!</strong><br> For using the library services, you need to have student or employee card.'; }
+               }
+            else if ( response.indexOf('authenticationFailure')==0 ) {
+               regResponse.innerHTML='Password check failed. Please try again.';
+               regSubmit.style.display='';
+               regPassw.style.display='';
+               regPasswLabel.style.display='';}
+            else if ( response.indexOf('alreadyRegistrated')==0 ) {
+               regResponse.innerHTML='You have been already registrated in the library. New registration is not needed.'; }
+            else if ( response.indexOf('finishedStudyorJob')==0 ) {
+               regResponse.innerHTML='You study or employment have been finished already.<br>The registration cannot be performed online, please visit our library.'; }
+            else if ( response.indexOf('plifModificationAll')==0 ) {
+               regResponse.innerHTML='You user account cannot be modified. <br>The registration cannot be performed online, please visit our library.'; }
+            else if ( response.indexOf('error')==0 ) {
+               regResponse.innerHTML='Error: '+response.replace(/^error\s*/,'')+'<br>Please try again later or contact administrator: aleph@library.gen'; 
+               regSubmit.style.display=''; }
+            else {
+               regResponse.innerHTML = ( response!='' ? response : 'No response!') +'<br>If this is error, we should gave been informed about it. Still, you can also contact administrator: aleph@library.gen'; 
+               regSubmit.style.display=''; }
+            } );
+         XHR.addEventListener( "error", function( event ) {
+            document.getElementById('registrationResponse').innerHTML = 'We apologize, server cannot be contacted.<br>Please try again later or contact administrator1: aleph@library.gen';
+            regSubmit.style.display=''; 
+            } );
+         XHR.open( "POST", "/cgi-bin/registration.cgi" );
+         XHR.send( FD );
+         }
+     const form = document.getElementById( "registrationForm" );
+     form.addEventListener( "submit", function ( event ) {
+     event.preventDefault();
+     sendData();
+     } );
+   } );
+
+//switch standard bor-account page content to online registration,
+//   if there is url argument "registration"
+if ( window.location.search.indexOf('registration')>-1 ) {
+   switch2registration();
+   }
+
+//show notice about registration 
+   var blockTexts='';
+   var noOfBlocks=0;
+   var blockTextsElements=document.querySelectorAll('.blocks');
+   for  ( let i=0; blockTextsElements[i]; i++ ) { 
+      if ( blockTextsElements[i].innerHTML.replace(/\s/g,'').length != 0 ) {
+        noOfBlocks++;
+        blockTexts += blockTextsElements[i].innerHTML; 
+        }
+      } 
+   if ( blockTexts.indexOf('not registrated') && noOfBlocks==1 && '$0400'.replace(/\s/g,'').length>1 ) { //!!change this text according to local settings of the block
+     document.getElementById('onlineRegistrationNotice').style.display=''; }
+</script>
+
+
+
+<a href="javascript:replacePage('&server_f?func=bor-proxy');">Proxy/Sponzor</a>
+<td  class="td1" align="left">&nbsp;$3400 </td>
+<a href="javascript:replacePage('&server_f?func=file&file_name=bor-note-new');"> Zanechte poznámku pro JINÉHO ètenáøe</a>
+
+<include>copyrights
+</body>
+</html>

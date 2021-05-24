@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- filename: patron-notice -->
+<html>
+<head>
+<!--title>&f-base - Upozornìní ètenáøe</title-->
+<title>Univerzitní knihovna OU - Upozornìní ètenáøe</title>
+<include>meta-tags
+
+<script language="Javascript">
+function setCookieSession() { document.cookie = "ALEPH_SESSION_ID = $SESS; path = /; SameSite=Lax"; }
+</script>
+
+</head>
+<body topmargin="0" onload="javascript:setCookieSession();">
+
+
+<include>head-1
+
+<form method="post" name="form1" action="&server_f?func=find-b-0">
+   <input type="hidden" name="func"                value="patron-notice">
+   <input type="hidden" name="nxtpg_patron_notice" value="N">
+   <input type="hidden" name="nxtpg_source"        value="$0100">
+   <input type="hidden" name="nxtpg_bor_id"        value="$0200">
+   <input type="hidden" name="nxtpg_prog"          value="$0300">
+   <input type="hidden" name="nxtpg_file"          value="$0400">
+   <input type="hidden" name="nxtpg_login_source"  value="$0500">
+   <input type="hidden" name="nxtpg_code_value"    value="$0600">
+   <input type="hidden" name="nxtpg_tr_value"      value="$0700">
+   <input type="hidden" name="nxtpg_heading_no"    value="$0800">
+   <input type="hidden" name="$4000" value="$4100">
+   <input type="hidden" name="$4200" value="$4300">
+   <input type="hidden" name="$4400" value="$4500">
+   <input type="hidden" name="$4600" value="$4700">
+   <input type="hidden" name="$4800" value="$4900">
+   <input type="hidden" name="$5000" value="$5100">
+   <input type="hidden" name="$5200" value="$5300">
+   <input type="hidden" name="$5400" value="$5500">
+   <input type="hidden" name="$5600" value="$5700">
+   <input type="hidden" name="$5800" value="$5900">
+   <input type="hidden" name="$6000" value="$6100">
+   <input type="hidden" name="$6200" value="$6300">
+   <input type="hidden" name="$6400" value="$6500">
+   <input type="hidden" name="$6600" value="$6700">
+   <input type="hidden" name="$6800" value="$6900">
+   <input type="hidden" name="$7000" value="$7100">
+   <input type="hidden" name="$7200" value="$7300">
+   <input type="hidden" name="$7400" value="$7500">
+   <input type="hidden" name="$7600" value="$7700">
+   <input type="hidden" name="$7800" value="$7900">
+
+   <div style="margin-left: 15%; margin-right: 15%; text-align: center;">
+      <br>
+      <span class="text3">Zpráva pro ètenáøe $1000.</span>
+
+<!-- patron notice delinq -->
+      <p class="text9" style="display: $2000">
+Zaregistrujte se <a href="&server_f?func=bor-info&registration=1">online</a> nebo v <a href="http://knihovna.osu.cz/pujcovna/">pùjèovnì</a> èi <a href="http://knihovna.osu.cz/pujcovna-a-studovny/">fakultní studovnì</a>, kde pøedložíte svou studentskou/zamìstnaneckou kartu.<br><br>
+<!--Zaregistrujte se v Univerzitní knihovnì, v <a href="http://knihovna.osu.cz/pujcovna/">pùjèovnì</a> nebo <a href="http://knihovna.osu.cz/pujcovna-a-studovny/">fakultní studovnì</a> a pøedložte svou studentskou/zamìstnaneckou kartu.<br><br> -->
+Objednávat a rezervovat dokumenty mùžete již pøed registrací.<br><br>
+Kontakt:<br><br>
+telefon: 597 091 204, 733 143 733<br>
+e-mail:<a href="http://www.osu.cz/444/email/?osoba=Rq%2F8BNadoXfOfD6UB94Rm6fKR38nCeJwwqARDyv0MPs%3D"title="e-mail">pujcovna@osu.cz</a>
+       
+<!-- 
+ Váš úèet ètenáøe je zablokován.<br>
+         Zøejmì dosud nejste v knihovnì registrovaní nebo jste ukonèili studium èi zamìstnání na OU.
+      </p>
+      p class="text9" style="display: $2000">
+         Pro odblokování prosím konktaktujte <a href="http://knihovna.osu.cz/index.php?kategorie=34594&id=49">Pùjèovnu</a> nebo nìkterou ze <a href="http://knihovna.osu.cz/index.php?kategorie=34594&id=49">studoven</a>. -->
+         <!--Máte pøestupky v knihovnì $2100.-->
+      </p>
+
+<!-- patron notice cash -->
+      <p class="text9" style="display: $2500">
+         Máte nezaplacené uzavøené poplatky v knihovnì. <!-- $2600 -->
+      </p>
+
+<!-- patron notice overdue -->
+     <p class="text9" style="display: $3000">
+        Máte vèas nevrácené výpùjèky v knihovnì. <!-- $3100 -->
+     </p>
+
+<!-- patron notice expiration date -->
+     <p class="text1" style="display: $3300">
+        Vaše registrace v knihovnì skonèí <script type="text/javascript">document.write('$3400'.date_format_ou());</script><noscript>$3400</noscript>.
+     </p>
+     <p class="text1" style="display: $3300">
+         Pro prodloužení registrace prosím konktaktujte <a href="http://knihovna.osu.cz/pujcovna/">Pùjèovnu</a> nebo nìkterou ze <a href="http://knihovna.osu.cz/pujcovna-a-studovny/">studoven</a>.
+     </p>
+
+
+
+     <script type="text/javascript">
+        if ( ('$2500'+'$3000').indexOf('block') != -1 ) document.write('<p class="text9">Prosíme, abyste si zkontroloval(a) tyto údaje ve svém ètenáøském kontu!</p>');
+        //if ( "$2100"!="Globální" ) document.write('<p class="text9">Prosíme, abyste si zkontroloval(a) tyto údaje ve svém ètenáøském kontu!</p>');
+     </script>
+     <noscript>
+        <p class="text9">Prosíme, abyste si zkontroloval(a) tyto údaje ve svém <a href="&server_f?func=BOR-INFO">ètenáøském kontu</a>!</p>
+     </noscript>
+     <br>
+     <input type="image" class="input_button" name="func=login" src="&icon_path/f-continue.gif" border=0 alt="Pokraèovat">
+   </div>
+</form>
+<script type="text/javascript">
+   //pojistka, ze na strance nebude zadne info, prejde dal
+   if ( ('$2000'+'$2500'+'$3000'+'$3300').indexOf('block') < 0 ) { document.form1.submit(); }
+</script>
+<include>copyrights
+</body>
+</html>
+

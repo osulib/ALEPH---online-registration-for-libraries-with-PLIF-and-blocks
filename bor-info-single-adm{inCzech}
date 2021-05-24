@@ -1,0 +1,376 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- filename: bor-info-single-adm -->
+
+<html>
+<head>
+<include>meta-tags
+<title>&f-base - Souhrnné údaje o ètenáøi </title>
+<include>replace-page-js
+</head>
+
+<body topmargin="0">
+<include>head-replace
+<table width="100%" align="center" border="0" cellpadding="0" cellspacing="0">
+   <tr>
+      <td class="bar" width="20%" align="center" nowrap>&nbsp;</td>
+      <td class="bar" align="center" nowrap>
+	 <a class="blue" href="javascript:replacePage('&server_f?func=display-profile');" title="Osobní profil"> Osobní profil</a>
+      </td>
+      <td class="bar" align="center" nowrap>&nbsp;|&nbsp;</td>
+      <td class="bar" align="center" nowrap>
+	 <a class="blue" href="javascript:replacePage('&server_f?func=bor-sdi');" title="Klepnìte sem, pokud chcete aktualizovat své profily">Profily novinek SDI</a>
+      </td>
+      <td class="bar" align="center" nowrap id="heslo1">&nbsp;|&nbsp;</td>
+      <td class="bar" align="center" nowrap id="heslo2">
+	 <a class="blue" href="javascript:replacePage('&server_f?func=file&file_name=bor-update-password');" title="Klepnìte sem, pokud chcete zmìnit své heslo">Heslo</a>
+      </td>
+      <td class="bar" width="20%" align="center" nowrap>&nbsp;</td>
+   </tr>
+</table>
+
+<!--STANDARDNI ZOBRAZENI CTENARSKEHO KONTA (registration)-->
+<div id="borAccount">
+   <div class="title"> Ètenáøské konto -  <span id="jmeno">$0700</span></div>
+   <p>
+   <a name="messages"></a>
+   <div id="messages4U" style="display: none;">Je pro Vás uloženo $0800 zpráv.</div>
+   <script type="text/javascript">
+      //potlaceni info - je pro vas xxx zpravc
+      if (  document.getElementById('messages4U').getElementsByTagName('a').length>0 ) document.getElementById('messages4U').style.display='';
+      // horni menu "heslo" - zobrazi se jen pro externi uzivatele, 20170130
+      if ( '$0200'.indexOf('student')>-1 || '$0200'.indexOf('pracovn')>-1 || '$0200'.indexOf('employe')>-1 || '$0200'.indexOf('doktorand OU')>-1 || '$0200'.indexOf('postgraduate')>-1 ) {
+         document.getElementById('heslo1').style.display='none';
+         document.getElementById('heslo2').style.display='none';}
+   </script>
+   <noscript>
+     <span class=tr1 id=bold>Je pro vás uloženo $0800 zpráv.</span><br>
+   </noscript>
+
+
+<!--registration - mark blocks with class "blocks"-->
+   <!-- a name="blocks"></a>
+   <span class=tr1 id=bold>Bloky</span -->
+<span class="tr1 blocks" id="bold"> $2100 </span>
+<span class="tr1 blocks" id="bold"> $2200 </span>
+<span class="tr1 blocks" id="bold"> $2300 </span>
+<span class="tr1 blocks" id="bold"> $2400 </span>
+<span class="tr1 blocks" id="bold"> $2500 </span>
+<span class="tr1 blocks" id="bold"> $2600 </span>
+<span class="tr1 blocks" id="bold"> $2700 </span>
+<span class="tr1 blocks" id="bold"> $2800 </span>
+<span class="tr1 blocks" id="bold"> $2900 </span>
+<span class="tr1 blocks" id="bold"> $3000 </span>
+<span class="tr1 blocks" id="bold"> $3100 </span>
+<span class="tr1 blocks" id="bold"> $3200 </span>
+
+<!--registration--><p id="onlineRegistrationNotice" style="display: none;">Zaregistrujte se <a href="javascript:void(0)" onclick="switch2registration();">online</a> nebo v <a href="http://www.library.gen/">knihovnì</a>.<br></p>
+
+
+<table  border=0 cellspacing=2>
+   <tr id="loans">
+      <td class="td2" align="left">
+   	     <a href="javascript:replacePage('&server_f?func=bor-loan');">Výpùjèky</a>
+      </td>
+      $1100  
+   </tr>
+   <tr id="loan_history">
+      <td class="td2">
+	     <a href="javascript:replacePage('&server_f?func=bor-history-loan');">Historie výpùjèek</a>
+      </td>
+      $1300
+   </tr>
+   <tr id="requests">
+      <td class="td2" align="left">
+	     <a href="javascript:replacePage('&server_f?func=bor-hold');">Objednávky a rezervace</a>
+      </td>
+      $1500
+   </tr>
+<!--
+   <tr id="request_history">
+      <td class="td2">
+         <a href="javascript:replacePage('&server_f?func=bor-history-hold');">Historie požadavkù na výpùjèku</a>
+      </td>
+      $9000
+   </tr>
+-->
+   <!-- Požadavky na rezervace  $1600, Požadavky na kopie $1700 -->
+   <tr id="cash">
+      <td class="td2" align="left">
+	 <a href="javascript:replacePage('&server_f?func=bor-cash');"><!--Nesplacené poplatky-->Poplatky</a>
+         <a href="#" class="tip"><span style="font-family: Tahoma; font-size: 80%;">Uzavøené poplatky, jejichž výše je již definitivní</span><img src="&icon_path/question_mark.png" alt="?" width="15"></a>
+      </td>
+      $1800
+      <script type="text/javascript">
+	 var prodleni="$5500".replace(/\s/g, "");
+	 if ( prodleni != "0.00" ) {
+	    document.write('<tr><td class="td2" align="left">Otevøené poplatky z prodlení<a href="#" class="tip"><span style="font-family: Tahoma; font-size: 80%;">Poplatek se stále každý pracovní den po lhùtì k vrácení zvyšuje.<br>Lze jej uhradit až po uzavøení jeho výše, tj. vrácení výpùjèky</span><img src="&icon_path/question_mark.png" alt="?" width="15"></a></td>');
+	    document.write('<td class="td1">-'+prodleni+' Kè</td></tr>');
+   	    }
+	 var loan_id="$0400";
+	 if ( loan_id != "" && loan_id.substr(0,1)=="C" ) {
+	    document.write("<tr><td class='td2'>Prùkaz</td>");
+	    document.write("<td class='td1'>&nbsp;$0400</td></tr>"); }
+      </script>
+   </tr>
+</table>
+  
+<table  border=0 cellspacing=2>
+   <tr>
+      <td class="td2" align="left">
+         Meziknihovní výpùjèní služba -  <a href="javascript:replacePage('&server_f?func=bor-ill-active');">požadavky</a>
+      </td>
+      <td class="td1" align="left">
+         &nbsp;&nbsp;<a href="javascript:replacePage('&server_f?func=bor-ill-active');" id="mvs_req">$3300</a>&nbsp;&nbsp;<!--&nbsp;($6900 požadavkù z celkem pøípustných $7000)-->
+      </td>
+   </tr>
+   <tr>
+      <td class="td2" align="left">
+         Meziknihovní výpùjèní služba -  <a href="javascript:replacePage('&server_f?func=bor-ill');">historie</a>
+      </td>
+      <td class="td1" align="left">
+         &nbsp;&nbsp;<a href="javascript:replacePage('&server_f?func=bor-ill');">$1900</a>&nbsp;&nbsp;<!--&nbsp;($6700 požadavkù z celkem pøípustných $6800)-->
+      </td>
+   </tr>
+<!-- Nedávno uzavøené požadavky MVS   <a href="javascript:replacePage('&server_f?func=bor-ill-close&days=010');">&nbsp;10 dnù</a> -->
+<!-- Požadavky na úrovni titulu <a href="javascript:replacePage('&server_f?func=bor-title');">&nbsp;$5100</a> -->
+<!-- Akvizièní požadavky celkem <a href="javascript:replacePage('&server_f?func=bor-acq');">&nbsp;$5300</a> -->
+<!-- Aktivní akvizièní požadavky <a href="javascript:replacePage('&server_f?func=bor-acq-active');">&nbsp;$5200</a> -->
+<!-- Nedávno uzavøené akvizièní požadavky <a href="javascript:replacePage('&server_f?func=bor-acq-close&days=010');">&nbsp;10 dnù</a> -->
+	</table>
+
+<br>
+<a name="addresses"></a> <!-- $3600 -->
+<br>
+
+<table cellspacing="2" border="0" width="60%">
+   <tr>
+      <td class="td2" width="30%">Adresa</td>
+      <td class="td2"> $3700</td>
+   </tr>
+   <tr>
+      <td class="td2" width="30%">&nbsp;</td>
+      <td class="td2" align="left"> $3800</td>
+   </tr>
+   <script type="text/javascript">
+      if ( "$3900" != "" && "$3900"!="$3800" ) {
+        document.write("<tr><td class='td2'>&nbsp;</td>");
+        document.write("<td class='td2'>&nbsp;$3900</td></tr>");
+        };
+   </script>
+   <noscript>
+      <tr><td class='td2'>&nbsp;</td><td class='td2'> $3900</td></tr>
+   </noscript>
+   <script type="text/javascript">
+      if ( "$4000" != "" || "$4000"!="$3900" ) {
+        document.write("<tr><td class='td2'>&nbsp;</td>");
+        document.write("<td class='td2'>&nbsp;$4000</td></tr>"); }
+   </script>
+   <noscript>
+      <tr><td class='td2'>&nbsp;</td><td class='td2'> $4000</td></tr>
+   </noscript>
+   <script type="text/javascript">
+      if ( "$4100" != "" || "$4100"!="$4000" ) {
+        document.write("<tr><td class='td2'>&nbsp;</td>");
+        document.write("<td class='td2'>&nbsp;$4100</td></tr>"); }
+   </script>
+   <noscript>
+     <tr><td class='td2'> &nbsp;</td><td class='td2'> $4100</td></tr>
+   </noscript>
+   <script type="text/javascript">
+      if ( "$4500" != "" ) {
+        document.write("<tr><td class='td2'>PSÈ</td>");
+        document.write("<td class='td2'>&nbsp;$4500</td></tr>"); }
+   </script>
+   <noscript>
+     <tr><td class='td2'>PSÈ</td><td class='td2'>&nbsp;$4500</td></tr>
+   </noscript>
+   <tr>
+      <td class="td2" width="30%">E-mail</td>
+      <td class="td2"><span id="email">$4200</span></td>
+   </tr>
+<!--
+ <tr><td class="td2" width=30%>Od</td><td class="td2"> $4300</td> </tr>
+ <tr><td class="td2" width="30%">Adresa platí do</td><td class="td2"> $4400</td></tr>
+-->
+   <tr id="tel1"><td class="td2" align="left">Telefon</td><td class="td2" align="left">&nbsp;$4600</td></tr>
+   <tr id="tel2"><td class="td2" align="left">Telefon 2</td><td class="td2" align="left">&nbsp;$4700</td></tr>
+   <tr id="tel3"><td class="td2" align="left">Telefon 3</td><td class="td2" align="left">&nbsp;$4800</td> </tr>
+   <tr id="tel4"><td class="td2" align="left">Telefon 4</td><td class="td2" align="left">&nbsp;$4900</td></tr>
+   <script type="text/javascript">
+      //hide empty telephones
+      if ("$4600"=="") document.getElementById('tel1').style.display='none';
+      if ("$4700"=="") document.getElementById('tel2').style.display='none';
+      if ("$4800"=="") document.getElementById('tel3').style.display='none';
+      if ("$4900"=="") document.getElementById('tel4').style.display='none';
+   </script>
+   
+
+
+<!-- SMS Number $7200 
+Recieve SMS $7300 -->
+
+
+</table>
+
+<br>
+<table  width="auto" border="0" cellpadding="0" cellspacing="0">
+   <tr>
+      <td class="td2" align="left"> Registrace platí do:&nbsp; </td>
+      <td class="td1" align="left">
+         &nbsp;$0500
+         <script type="text/javascript">
+             if ( parseInt('$0500'.substr(-4))>2025 ) document.write (' nebo do konce studia/zamìstnání');
+         </script>
+      </td>
+   </tr>
+</table>
+</div>
+
+<!--registration-->
+<div id="registration" style="display: none;">
+   <div class="title"> Online registrace do knihovny</div>
+   <p>Zde se mùžete zaregistrovat do knihovny a plnì využívat jejich služeb</p>
+   <br>
+   <p>Jméno: <span id="jmeno">$0700</span></p>
+   <p>Kmenové ID: <span id="kmenID">$6000</span></p>
+   <br>
+   <p> Dnem podpisu tohoto formuláøe vzniká mezi uživatelem a knihovnou vztah, který se øídí obecnì závaznými právními pøedpisy, zejména zákonem è. 257/2001 Sb., o knihovnách a podmínkách provozování veøejných knihovnických a informaèních služeb (knihovní zákon), ve znìní pozdìjších pøedpisù, a zákonem è. 89/2012 Sb., obèanský zákoník, ve znìní pozdìjších pøedpisù, a dále knihovním øádem.</p> 
+   <p> Ochrana osobních údajù uživatele knihovny: (.... GDPR...).</p>
+   <ol> 
+      <li>Prohlašuji, že jsem se seznámil/a s Knihovním øádem, vèetnì všech jeho pøíloh, zejména s pøílohou Ceník a s pøílohou Zpracování a ochrana osobních údajù</a>“</li>
+      <li>(... ...)</li>
+   </ol>
+   <form  method="POST" id="registrationForm">
+      <p>
+         <input type="hidden" name="consent" value="Y">
+         <input type="hidden" name="borid" value="$6000">
+         <label for="registrationPassword" id="registrationPasswordLabel">Pro potvrzení zadejte znovu své heslo : </label>
+         <input id="registrationPassword" name="password" type="password">
+      </p>
+      <p style="margin-left:20%;">
+         <button name="consent" name="submit" type="submit" id="registrationSubmit" value="Y" class="main_button">Souhlasím</button>
+      </p>
+   </form>
+   <div id="registrationResponse" style="display: none; margin-left: 8em; background-color:#DBEBF9; box-shadow: 0 0 0.7em 0.7em rgba(219,235,249,1); padding: 1.4em; border-radius: 1em; display: none; "></div>
+</div>
+
+
+<!--registration--><!-- ONLINE REGISTRACE, 20210512-->
+<script type="text/javascript">
+   function switch2registration() {
+      document.getElementById('registration').style.display='';
+      document.getElementById('borAccount').style.display='none';
+      }
+
+
+   //listener for processing registration.cgi response
+   //   You may modify the text responses according to your 
+   window.addEventListener( "load", function () {
+      function sendData() {
+         const regResponse=document.getElementById('registrationResponse');
+         const regSubmit=document.getElementById('registrationSubmit');
+         const regPassw=document.getElementById('registrationPassword');
+         const regPasswLabel=document.getElementById('registrationPasswordLabel');
+         const wait=document.createElement('img'); wait.setAttribute('src','&icon_path/f-cekej.gif'); wait.setAttribute('alt','Zpracovávám...');
+         regResponse.appendChild(wait);
+         regResponse.style.display='inline-block';
+         regSubmit.style.display='none';
+         regPassw.style.display='none';
+         regPasswLabel.style.display='none';
+         const XHR = new XMLHttpRequest();
+         const FD = new FormData( form );  // Bind the FormData object and the form element
+         XHR.addEventListener( "load", function(event) { // Define what happens on successful data submission
+            let response=event.target.responseText;
+            if ( response.indexOf('OK')==0 ) {
+               if ( response.indexOf('noCard')==0 ) {
+                  regResponse.innerHTML='<br><strong>Dìkujeme za registraci v knihovnì!</strong> Nyní mùžete plnì využívat našich služeb.'; }
+               else {
+                  regResponse.innerHTML='<br><strong>Dìkujeme za provedení online registrace v knihovnì!</strong><br> Podmínkou využívání služeb knihovny je studentská nebo zamìstnanecká karta, která slouží jako ètenáøský prùkaz.'; }
+               }
+            else if ( response.indexOf('authenticationFailure')==0 ) {
+               regResponse.innerHTML='Nepodaøilo se ovìøit Vaše heslo. Zkuste to, prosím, znovu.';
+               regSubmit.style.display='';
+               regPassw.style.display='';
+               regPasswLabel.style.display='';}
+            else if ( response.indexOf('alreadyRegistrated')==0 ) {
+               regResponse.innerHTML='Již jste byli v knihovnì registrováni, nebylo potøeba se registrovat znova. Dìkumeme!'; }
+            else if ( response.indexOf('finishedStudyorJob')==0 ) {
+               regResponse.innerHTML='Vaše studia nebo pracovní pomìr skonèily nebo jsou pøerušeny.<br>Registraci nelze provést online, navštivte prosím naši pùjèovnu nebo studovnu.'; }
+            else if ( response.indexOf('plifModificationAll')==0 ) {
+               regResponse.innerHTML='Na vašem kontì v knihovnì nelze dle nastavení provádìt žádné zmìny. <br>Registraci nelze provést online, navštivte prosím naši pùjèovnu nebo studovnu</a>.'; }
+            else if ( response.indexOf('error')==0 ) {
+               regResponse.innerHTML='Došlo k chybì: '+response.replace(/^error\s*/,'')+'<br>Zkuste to prosím pozdìji nebo rovnou kontaktujte administrátora: aleph@library.gen'; 
+               regSubmit.style.display=''; }
+            else {
+               regResponse.innerHTML = ( response!='' ? response : 'Žádná odpovìï aplikace') +'<br>Pokud se jedná o chybu, mìli bychom o ní být informováni. Mùžete také sami kontaktovat administrátora: aleph@library.gen'; 
+               regSubmit.style.display=''; }
+            } );
+         XHR.addEventListener( "error", function( event ) {
+            document.getElementById('registrationResponse').innerHTML = 'Omlouváme se, došlo k technické chybì komunikace se serverem.<br>Zkuste to prosím pozdìji nebo rovnou kontaktujte administrátora: aleph@library.gen';
+            regSubmit.style.display=''; 
+            } );
+         XHR.open( "POST", "/cgi-bin/registration.cgi" );
+         XHR.send( FD );
+         }
+     const form = document.getElementById( "registrationForm" );
+     form.addEventListener( "submit", function ( event ) {
+     event.preventDefault();
+     sendData();
+     } );
+   } );
+
+//switch standard bor-account page content to online registration,
+//   if there is url argument "registration"
+if ( window.location.search.indexOf('registration')>-1 ) {
+   switch2registration();
+   }
+
+//show notice about registration 
+   var blockTexts='';
+   var noOfBlocks=0;
+   var blockTextsElements=document.querySelectorAll('.blocks');
+   for  ( let i=0; blockTextsElements[i]; i++ ) { 
+      if ( blockTextsElements[i].innerHTML.replace(/\s/g,'').length != 0 ) {
+        noOfBlocks++;
+        blockTexts += blockTextsElements[i].innerHTML; 
+        }
+      } 
+   if ( blockTexts.indexOf('není registrován') && noOfBlocks==1 && '$0400'.replace(/\s/g,'').length>1 ) { //!!change this text according to local settings of the block
+     document.getElementById('onlineRegistrationNotice').style.display=''; }
+</script>
+
+
+
+
+<script type="text/javascript">
+//sklonovani slov za cislovkami v standardni ctenarskem konte
+if ( document.getElementById('loans') ) {
+   var loanT = document.getElementById('loans').cells[1].firstChild.firstChild;
+   loanT.nodeValue = loanT.nodeValue.sklonovaniCisla('výpùjèka','výpùjèky','výpùjèek');}
+if ( document.getElementById('requests') ) {
+   var reqT =  document.getElementById('requests').cells[1].firstChild.firstChild;
+   reqT.nodeValue = reqT.nodeValue.sklonovaniCisla('objednávka','objednávky','objednávek');}
+if ( document.getElementById('mvs_req') ) {
+   var mvsreqT =  document.getElementById('mvs_req');
+   mvsreqT.innerHTML = mvsreqT.innerHTML.sklonovaniCisla('požadavek','požadavky','požadavkù');}
+if ( document.getElementById('cash') ) {
+   var cashT =  document.getElementById('cash').cells[1].firstChild;
+   if ( cashT ) { 
+      cashT.innerHTML = cashT.innerHTML.replace('0.00','0');
+      cashT.innerHTML = cashT.innerHTML.replace('.00',',- Kè') ;
+      }
+   }
+//obalkyknih - poslani borid
+var loanLinks=(document.getElementById('loans') || document.createElement('span')).getElementsByTagName('a');
+for (var i=0; i<loanLinks.length; i++) {
+   if ( (loanLinks[i].href || '').indexOf('bor-loan')>-1 ) { loanLinks[i].href = loanLinks[i].href.replace(/(http[^'"]+)/,String.fromCharCode(36)+'1&borID='+encodeURI('$6000'));}
+   }
+</script>
+<!--
+    <a href="javascript:replacePage('&server_f?func=bor-proxy');">Proxy/Sponzor</a>
+  <td  class="td1" align="left">&nbsp;$3400 </td>
+  <a href="javascript:replacePage('&server_f?func=file&file_name=bor-note-new');"> Zanechte poznámku pro JINÉHO ètenáøe</a>
+-->
+<include>copyrights
+</body>
+</html>
