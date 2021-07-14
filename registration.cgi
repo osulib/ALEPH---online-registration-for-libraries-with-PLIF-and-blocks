@@ -142,11 +142,12 @@ if ( $passed_auth ) {
       }
    #check z303-plif-modification - if some updates are blocked, send alert to admin.
    #    If whole record is protected (value '1'), update/online reg. cannot be done
-   if ( index($xbor->{'z303'}[0]->{'z303-plif-modification'}[0],'1') > -1 ) { 
-       print "plifModificationAll\n";
-       mail2admin('Online registration - blocked by protected plif',"$now - patron with ID $borid wants to registrate from IP $ip4log, but this cannot be done as whole his record is protected by plif-modification settings.\n");
-       exit 0;
-       }
+   #    20210714 checking of this value sometimes failes. Replaced by checking Rest PUT response below
+  #   if ( index($xbor->{'z303'}[0]->{'z303-plif-modification'}[0],'1') > -1 ) { 
+#       print "plifModificationAll\n";
+#       mail2admin('Online registration - blocked by protected plif',"$now - patron with ID $borid wants to registrate from IP $ip4log, but this cannot be done as whole his record is protected by plif-modification settings.\n");
+#       exit 0;
+#       }
    
    #
    #write registration date and modify record for sending to api
@@ -180,6 +181,16 @@ if ( $passed_auth ) {
              and 
         grep(/Succeeded to REWRITE table z305/,@{$borupd_response->{'error'}}) ) 
       {
+         #20210714 check of plick modification supra replaced by checking the PUT Rest response
+         if ( grep(/Succeeded to REWRITE table z303 with modification restrictions/,@{$borupd_response->{'error'}}) ) {
+            print "plifModificationAll\n";
+            mail2admin('Online registration - blocked by protected plif',"$now - patron with ID $borid wants to register from IP $ip4log, but this cannot be done as whole his record is protected by plif-modification settings.\n");
+            open ( LOGFILE, ">>$log" );
+            print LOGFILE "$now - online registration for patron $borid, IP $ip4log blocked by z303 protected plif: ".$xbor->{'z303'}[0]->{'z303-plif-modification'}[0]."\n";
+            close(LOGFILE);
+            exit 0;
+            }
+
          #write circulation log z309
          circ_log_upd() or raiseError('ERROR','Error while updating z309 circulation log');
          #write text log
