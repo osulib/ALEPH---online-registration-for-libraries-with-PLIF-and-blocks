@@ -9,16 +9,18 @@
 #	- submit ('Y')
 #
 #OUT responses (text/plain)
-#   'OK' - sucessfuly newly registrated
-#   'OK noCard' - sucessfuly newly registrated, but user has no valid Card
+#   'OK' - sucessfuly newly registered
+#   'OK noCard' - sucessfuly newly registered, but user has no valid Card
 #   'authenticationFailure' - authentication using patron IDs from API and password given by the user (www form) failed.
-#   'alreadyRegistrated '+DD/MM/YYYY  - the patron has been already registrated and expiry date
+#   'alreadyRegistrated '+DD/MM/YYYY  - the patron has been already registered and expiry date
 #   'finishedStudyorJob' - the patron has global block that claims he has finished his study or employment/job, registration cannot be passed
 #   'error '+text of the error message.
 #   'plifModificationAll' - the whole patron record is protected by {z303}-plif-modification settings. It cannot be updated by api or procedure.
+#   'blockedPatronStatus' - The record in Aleph has status that is blocked by $borStatus4block settings. RC1
 #
 #by Matyas Bajger, library.osu.eu, May 2021, GNU GPL License
 #
+#RC1 202309 - it may not possible to on registrate patrons with certain borrower status(es). Contact data for alumni or short-time employees must be verified in person in a library
 
 use strict;
 use warnings;
@@ -36,12 +38,13 @@ use Data::Dumper;
 #initial variables
 my $adm_base="osu50"; #lower case
 my $xserver_url="https://katalog.osu.cz/X";
-my $xborinfo_user="X-BOR-INFO"; #aleph user with privilegies to both bor-info and bor-auth x-services and Patron Record - Display
-my $xborinfo_user_pas="SteSpaq8"; #password to this
-my $xborupd_user="X-BOR-INFO"; #aleph user with privilegies to bor-update x-service and Patron Record - Update
-my $xborupd_user_pas="SteSpaq8"; #password to this
-my @block_not_registrated=(50); #array with values of global block for not registrated patrons
-my @block_finished=(51,52); #array with values of global block for patrons with finished study or employment. Theese cannot be registrated.
+my $xborinfo_user="... ... ..."; #aleph user with privilegies to both bor-info and bor-auth x-services and Patron Record - Display
+my $xborinfo_user_pas="... ... ..."; #password to this
+my $xborupd_user="... ... ..."; #aleph user with privilegies to bor-update x-service and Patron Record - Update
+my $xborupd_user_pas="... .... ..."; #password to this
+my @block_not_registered=(50); #array with values of global block for not registered patrons
+my @block_finished=(51,52); #array with values of global block for patrons with finished study or employment. Theese cannot be registered.
+my @borStatus4block=('06','09','veřejnost','osoba se specif. potřebami','public','user with special needs'); #array - patron records with these statuses cannot ne registered online. The process will be blocked. It is recommended to set both codes and translated names of the statuses. API response used here may contain code or text, according to the settings.  RC1
 my $libraryCardIDtype='01'; #type of Aleph ID used for library (student, staff) cards, for checking if user has a valid card
 my $defaultAlephCardPrefix='BC-'; #For user without card. As Aleph sets own value for mandatory field ID, idetifiy it here
                                  #  by value set in util h 2, last-bor-id-1 
@@ -51,7 +54,7 @@ my $circ_log_event_no=92; #event no. to be written in circulation log (z309, Z30
 my $circ_log_event_text="Online registrace"; #event text to be written in circ. log (z309)
 
 my $admin_mail='matyas.bajger@osu.cz'; #for sending errors etc.
-my $debug='1'; #debug mode, sends all registrations to admin_email, not just erros
+my $debug='0'; #debug mode, sends all registrations to admin_email, not just erros
 
 
 #get request with comment from opac
@@ -94,13 +97,33 @@ for my $z308 ( @{$xbor->{'z308'}} ) {
          $passed_auth=1; last;
          }
       }
+
    #check for user card
    if ( $z308->{'z308-key-type'}[0] eq $libraryCardIDtype and ( $z308->{'z308-key-type'} ne '' or not ( $z308->{'z308-key-type'} =~ /^$defaultAlephCardPrefix/ ) ) ) {
       $has_card=1;
       }     
    }
+
+#RC1 check for blocked patron statusses
+my $bor_status = $xbor->{'z305'}[0]->{'z305-bor-status'}[0];
+open ( LOGFILE, ">>$log" ); #TODO DEBUG
+print LOGFILE "DEBUG patron has status $bor_status\n";
+for my $x ( @borStatus4block ) {
+print LOGFILE "DEBUG    checking blocked status $x\n";
+   if ( $bor_status eq $x ) { 
+print LOGFILE "DEBUG         MATCH\n";
+      print "blockedPatronStatus\n";
+      mail2admin('Online registration - blockedPatronStatus. '."$now - patron with ID $borid wants to register from IP $ip4log, but they have patron status $x that is blocked for registration.\n");
+      #TODO DEBUG odkomentuj open ( LOGFILE, ">>$log" );
+      print LOGFILE "$now - patron with ID $borid wants to register from IP $ip4log, but they have patron status $x that is blocked for registration.\n";
+      close(LOGFILE);
+      exit 0;
+      }
+   }
+#RC1 end
+
 if ( $passed_auth ) {
-   #check if the patron has not been already registrated or finished his study/job
+   #check if the patron has not been already registered or finished his study/job
    my $delinq1 = $xbor->{'z303'}[0]->{'z303-delinq-1'}[0];
    my $delinq2 = $xbor->{'z303'}[0]->{'z303-delinq-2'}[0];
    my $delinq3 = $xbor->{'z303'}[0]->{'z303-delinq-3'}[0];
@@ -108,21 +131,21 @@ if ( $passed_auth ) {
    for my $x ( @block_finished ) {
       if ( $delinq1 eq $x or $delinq2 eq $x or $delinq3 eq $x ) { 
          open ( LOGFILE, ">>$log" );
-         print LOGFILE "$now - $remote_host - $remote_addr : patron $borid wants to registrate, but he/she has blocks of finished study/employment\n";
+         print LOGFILE "$now - $remote_host - $remote_addr : patron $borid wants to register, but he/she has blocks of finished study/employment\n";
          close(LOGFILE);
-         raiseError('WARNING',"Patron $borid wants to registrate, but he/she has blocks of finished study/employment");
+         raiseError('WARNING',"Patron $borid wants to register, but he/she has blocks of finished study/employment");
          print "finishedStudyorJob\n";
          exit 0;
          }
       }
-   #check for really not registrated
-   my $not_registrated=0;
-   for my $x ( @block_not_registrated ) {
-      if ( $delinq1 eq $x or $delinq2 eq $x or $delinq3 eq $x ) { $not_registrated=1; }
+   #check for really not registered
+   my $not_registered=0;
+   for my $x ( @block_not_registered ) {
+      if ( $delinq1 eq $x or $delinq2 eq $x or $delinq3 eq $x ) { $not_registered=1; }
       }
-   if ( !$not_registrated ) {
+   if ( !$not_registered ) {
       my $expiry_date = $xbor->{'z305'}[0]->{'z305-expiry-date'}[0];
-      raiseError('WARNING',"Patron $borid wants to registrate, but he/she has valid registration till $expiry_date\n");
+      raiseError('WARNING',"Patron $borid wants to register, but he/she has valid registration till $expiry_date\n");
       print "alreadyRegistrated $expiry_date\n";
       exit 0;
       }
@@ -130,9 +153,9 @@ if ( $passed_auth ) {
    if ( $consent ne 'Y' ) { raiseError('ERROR','Missing consent to registration sent by final user'); }
       
    #change global block to zero
-   my %block_not_registrated_hash = map {$_ => 1} @block_not_registrated;
+   my %block_not_registered_hash = map {$_ => 1} @block_not_registered;
    for my $i ('1','2','3') {
-      if ( exists $block_not_registrated_hash{ $xbor->{'z303'}[0]->{'z303-delinq-'.$i}[0] } ) {
+      if ( exists $block_not_registered_hash{ $xbor->{'z303'}[0]->{'z303-delinq-'.$i}[0] } ) {
          $xbor->{'z303'}[0]->{'z303-delinq-'.$i}[0]='00';
          $xbor->{'z303'}[0]->{'z303-delinq-n-'.$i}[0]='';
          $xbor->{'z303'}[0]->{'z303-delinq-'.$i.'-update-date'}[0]=$today;
@@ -142,10 +165,15 @@ if ( $passed_auth ) {
       }
    #check z303-plif-modification - if some updates are blocked, send alert to admin.
    #    If whole record is protected (value '1'), update/online reg. cannot be done
+   #
    #    20210714 checking of this value sometimes failes. Replaced by checking Rest PUT response below
-  #   if ( index($xbor->{'z303'}[0]->{'z303-plif-modification'}[0],'1') > -1 ) { 
+#if ( index($xbor->{'z303'}[0]->{'z303-plif-modification'}[0],'1') > -1 ) { 
 #       print "plifModificationAll\n";
-#       mail2admin('Online registration - blocked by protected plif',"$now - patron with ID $borid wants to registrate from IP $ip4log, but this cannot be done as whole his record is protected by plif-modification settings.\n");
+#       mail2admin('Online registration - blocked by protected plif',"$now - patron with ID $borid wants to register from IP $ip4log, but this cannot be done as whole his record is protected by plif-modification settings.\n");
+#              open ( LOGFILE, ">>$log" );
+#              print LOGFILE "$now - online registration for patron $borid, IP $ip4log blocked by z303 protected plif: ".$xbor->{'z303'}[0]->{'z303-plif-modification'}[0]."\n";
+#              close(LOGFILE);
+#
 #       exit 0;
 #       }
    
@@ -176,6 +204,7 @@ if ( $passed_auth ) {
    my $borupd = $xupdrequest->post( $xserver_url, [ 'op' => 'update_bor',  'library' => $adm_base,  'update_flag' => 'Y',  'user_name' => $xborupd_user,   user_password => $xborupd_user_pas,  'xml_full_req' => $borupd_xml ] );
    unless ( $borupd->is_success ) { raiseError('ERROR','Error in x-server update-bor response: '.$borupd->status_line); } 
    my $borupd_response = XMLin( $borupd->content, ForceArray=>1 ) || raiseError('ERROR','Error in x-server update-bor response. It cannot be parsed as XML');
+
 
    if ( grep(/Succeeded to REWRITE table z303/,@{$borupd_response->{'error'}}) 
              and 
